@@ -22,7 +22,7 @@ using namespace std;
 
 using namespace sf; 
 
-static int life = 3;
+static int life = 10;
 
 static int score = 0;
 

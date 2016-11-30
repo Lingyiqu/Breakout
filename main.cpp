@@ -36,6 +36,8 @@ Texture background;
 
 Texture bricktex;
 
+Texture crackedbrick;
+
 Texture balltex;
 
 SoundBuffer buf;
@@ -119,6 +121,8 @@ int main()
 				window.close();
 		}
 
+		float dt = clock.restart().asSeconds();
+
 		window.clear(Color::Black);
 
 		background.loadFromFile("backy.jpg");
@@ -127,13 +131,15 @@ int main()
 
 		Back.setPosition(0, 0);
 
-		Back.setTexture(&background);
+		//Back.setTexture(&background);
 
 		//window.clear(Color(0, 0, 255));
 
 		window.draw(Back);
 
 		bricktex.loadFromFile("brick.png");
+
+		crackedbrick.loadFromFile("crackedbrick.png");
 		
 		balltex.loadFromFile("ball.png");
 
@@ -141,7 +147,7 @@ int main()
 		
 		balltex.setSmooth(true);
 
-		float dt = clock.restart().asSeconds();
+		
 
 		window.draw(myball.getball());
 
@@ -153,14 +159,15 @@ int main()
 			{
 				if (mybrick[i][j].isCollision == false)
 				{
-
-					window.draw(mybrick[i][j].getbrick());
+					window.draw(mybrick[i][j].getbrick());					
 					mybrick[i][j].brick.setTexture(&bricktex);
+
 				}
 
 			}
 		}
 		
+
 
 		
 		Text hud;
@@ -172,6 +179,8 @@ int main()
 		hud.setFont(font);
 
 		hud.setCharacterSize(75);
+
+		hud.setColor(Color::Blue);
 
 		std::stringstream ss;
 
@@ -257,18 +266,56 @@ int main()
 
 		}
 		
-		for (int j = 0; j < 6; j++)
+		for (int j = 0; j < 5; j++)
 		{
 			for (int i = 0; i < 8; i++)
 			{
+				mybrick[i][j].hp = 1;
 				if (paddle_overlap(mybrick[i][j].getPosition(), myball.getPosition()) && (mybrick[i][j].isCollision == false))
 				{
+					mybrick[i][j].hp--;
+
 					myball.yVel = -(1 + 0.005*(j-4))*myball.yVel;
 
 					myball.xVel = (1 + 0.002*(j - 4))*myball.xVel;
+					
+					}
+
+				if (mybrick[i][j].hp <= 0)
+				{
 					mybrick[i][j].isCollision = true;
 					score++;
 				}
+				
+				
+			}
+		}
+		for (int i = 0; i < 8; i++)
+		{
+			mybrick[i][5].hp = 2;
+		}
+
+		for (int i = 0; i < 8; i++)
+		{
+			//mybrick[i][5].hp =2;
+			if (paddle_overlap(mybrick[i][5].getPosition(), myball.getPosition()) && (mybrick[i][5].isCollision == false))
+			{
+				mybrick[i][5].hp--;
+
+				myball.yVel = -(1 + 0.005*(5 - 4))*myball.yVel;
+
+				myball.xVel = (1 + 0.002*(5 - 4))*myball.xVel;
+
+			}
+			if (mybrick[i][5].hp == 1)
+			{
+			crackedbrick.loadFromFile("crackedbrick.png");
+			mybrick[i][5].brick.setTexture(&crackedbrick);
+			}
+			if (mybrick[i][5].hp <= 0)
+			{
+				mybrick[i][5].isCollision = true;
+				score++;
 			}
 		}
 		
