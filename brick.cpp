@@ -32,7 +32,7 @@ void Brick::InitBrick(float posX, float posY)
 	position.y = posY;
 	brick.setSize(Vector2f(100, 20));
 	brick.setPosition(position);
-	brick.setFillColor(sf::Color(255,255, 250));
+	brick.setFillColor(sf::Color(250,255, 255));
 }
 
 RectangleShape Brick::getbrick()
@@ -47,18 +47,4 @@ FloatRect Brick::getPosition()
 	return bat;
 }
 
-//void Brick::draw()
-//{
-//
-//}
-//
-//void Brick::hit()
-//{
-//	
-//}
-//
-//bool Brick::isDead()
-//{
-//
-//}
 

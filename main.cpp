@@ -91,16 +91,6 @@ int main()
 
 
 {
-	for (int j = 0; j < 6; j++)
-	{
-		for (int i = 0; i < 8; i++)
-		{
-			mybrick[i][j].InitBrick(100 * i, 20*j);
-		}
-	}
-	
-	
-	
 
 	buf.loadFromFile("ball.wav");
 
@@ -109,6 +99,28 @@ int main()
 
 	Clock clock;
 	//cout << "outMain\t";
+
+	bricktex.loadFromFile("brick.png");
+
+	crackedbrick.loadFromFile("crackedbrick.png");
+
+	balltex.loadFromFile("ball.png");
+
+	for (int j = 0; j < 6; j++)
+	{
+		for (int i = 0; i < 8; i++)
+		{
+			mybrick[i][j].InitBrick(100 * i, 20 * j);
+			mybrick[i][j].brick.setTexture(&bricktex);
+		}
+	}
+
+	for (int i = 0; i < 8; i++)    
+	{
+		mybrick[i][5].hp = 2;
+	}
+
+
 	while (window.isOpen())//&& isPlay==true)
 	{
 		//cout << "inLOop\t";
@@ -125,7 +137,7 @@ int main()
 
 		window.clear(Color::Black);
 
-		background.loadFromFile("backy.jpg");
+		//background.loadFromFile("backy.jpg");
 
 		Back.setSize(Vector2f(800, 600));
 
@@ -137,11 +149,7 @@ int main()
 
 		window.draw(Back);
 
-		bricktex.loadFromFile("brick.png");
-
-		crackedbrick.loadFromFile("crackedbrick.png");
 		
-		balltex.loadFromFile("ball.png");
 
 		myball.ball.setTexture(&balltex);
 		
@@ -160,7 +168,7 @@ int main()
 				if (mybrick[i][j].isCollision == false)
 				{
 					window.draw(mybrick[i][j].getbrick());					
-					mybrick[i][j].brick.setTexture(&bricktex);
+					
 
 				}
 
@@ -279,44 +287,51 @@ int main()
 
 					myball.xVel = (1 + 0.002*(j - 4))*myball.xVel;
 					
+					if (mybrick[i][j].hp <= 0)
+					{
+						mybrick[i][j].isCollision = true;
+						score++;
+					}
+					
 					}
 
-				if (mybrick[i][j].hp <= 0)
-				{
-					mybrick[i][j].isCollision = true;
-					score++;
-				}
+				
 				
 				
 			}
 		}
-		for (int i = 0; i < 8; i++)
-		{
-			mybrick[i][5].hp = 2;
-		}
-
+		
 		for (int i = 0; i < 8; i++)
 		{
 			//mybrick[i][5].hp =2;
 			if (paddle_overlap(mybrick[i][5].getPosition(), myball.getPosition()) && (mybrick[i][5].isCollision == false))
 			{
+				cout << "\thp0: " << mybrick[i][5].hp;
+
+				
+
 				mybrick[i][5].hp--;
 
 				myball.yVel = -(1 + 0.005*(5 - 4))*myball.yVel;
 
 				myball.xVel = (1 + 0.002*(5 - 4))*myball.xVel;
+				cout << "\thp1: " << mybrick[i][5].hp;
+				if (mybrick[i][5].hp <= 0)
+				{
+					cout << "\thp2: " << mybrick[i][5].hp;
+					mybrick[i][5].isCollision = true;
+					score++;
+				}
 
 			}
 			if (mybrick[i][5].hp == 1)
 			{
-			crackedbrick.loadFromFile("crackedbrick.png");
+				cout << "\thp3: " << mybrick[i][5].hp;
+
+			//crackedbrick.loadFromFile("crackedbrick.png");
 			mybrick[i][5].brick.setTexture(&crackedbrick);
 			}
-			if (mybrick[i][5].hp <= 0)
-			{
-				mybrick[i][5].isCollision = true;
-				score++;
-			}
+			
 		}
 		
 		
