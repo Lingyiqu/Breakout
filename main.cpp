@@ -234,44 +234,12 @@ int main()
 		mypaddle.paddle_update(dt);
 		
 
-		if (paddle_overlap(mypaddle.getPosition(), myball.getPosition()))
+		if (paddle_overlap(mypaddle.getPosition(), myball.getPosition())&&( myball.yVel>0))
 		{
 			
-			if (myball.getPosition().x <= 100)
-			{
-				myball.yVel = -myball.yVel;
-				myball.xVel = myball.xVel;
-			}
-			if (myball.getPosition().x>100 && myball.getPosition().x<200)
-			{
-				myball.yVel = -myball.yVel;
-				myball.xVel = myball.xVel;
-			}
-
-			if (myball.getPosition().x>=200 && myball.getPosition().x<=300)
-			{
-				myball.yVel = -myball.yVel;
-				myball.xVel = myball.xVel;
-			}
-
-			if (myball.getPosition().x>300 && myball.getPosition().x<400)
-			{
-				myball.xVel = myball.xVel;
-				myball.yVel = -myball.yVel;
-			}
-
-			if (myball.getPosition().x>= 400 && myball.getPosition().x<500)
-			{
-				myball.xVel = myball.xVel;
-				myball.yVel = -myball.yVel;
-			}
-
-			if (myball.getPosition().x>= 500 && myball.getPosition().x<= 600)
-			{
-				myball.xVel = myball.xVel;
-				myball.yVel = -myball.yVel;
-			}
-
+			myball.yVel = -myball.yVel;
+			
+			myball.xVel = myball.xVel;
 		}
 		
 		for (int j = 0; j < 5; j++)
