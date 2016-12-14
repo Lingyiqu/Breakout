@@ -46,7 +46,7 @@ CircleShape Ball::getball()
 	return ball;
 }
 
-void Ball::ball_update(float dt)
+bool Ball::ball_update(float dt,float paddlex,Sound& soundwallbounce)
 
 {
 	Vector2f pos = ball.getPosition();
@@ -56,24 +56,37 @@ void Ball::ball_update(float dt)
 	pos.x += xVel * dt;
 
 
-	if ((pos.y > window_height )&&( yVel > 0))
-
-		yVel = -yVel;
+	if ((pos.y > window_height) && (yVel > 0))
+	{
+		//pos.y = 20;
+		//pos.x = paddlex+ 60;
+		yVel = 0;
+		xVel = 0;
+		return true;
+	}
 
 	if ((pos.y < 0) && (yVel < 0))
-
+	{
 		yVel = -yVel;
+		if (soundwallbounce.getStatus() != SoundSource::Playing) soundwallbounce.play();
+	}
+		
 
 	if ((pos.x > window_width) && (xVel> 0))
-
+	{
+		if (soundwallbounce.getStatus() != SoundSource::Playing) soundwallbounce.play();
 		xVel = -xVel;
+	}
+		
 
 	if ((pos.x < 0) &&(xVel < 0))
-
+	{
+		if (soundwallbounce.getStatus() != SoundSource::Playing) soundwallbounce.play();
 		xVel = -xVel;
+	}
 
 	ball.setPosition(pos);
-
+	return false;
 }
 
 void Ball::resetBallPosition(Vector2f position)

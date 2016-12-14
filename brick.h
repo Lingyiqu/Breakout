@@ -37,4 +37,6 @@ public:
 	void hit(); //{ --hp; }
 	bool isDead(); //{ hp <= 0; }
 	bool isCollision = false;
+	bool Rightmove;
+	bool shatter = false;
 };

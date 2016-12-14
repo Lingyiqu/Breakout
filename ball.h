@@ -40,7 +40,7 @@ public:
 
 	CircleShape getball();
 
-	void ball_update(float dt);
+	bool ball_update(float dt, float paddlex, Sound& soundwallbounce);
 
 	void resetBallPosition(Vector2f position);
 };
